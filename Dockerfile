@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM --platform=$BUILDPLATFORM satmandu/raspios:lite AS baseimage
+FROM satmandu/raspios:lite AS baseimage
 
 # Arguments during build
 ARG TARGETPLATFORM
