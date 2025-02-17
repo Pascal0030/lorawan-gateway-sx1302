@@ -13,7 +13,7 @@ name: Build and Push lorawan gateway
 
 jobs:
   build-and-push:
-    uses: Pascal0030/.github/workflows/build-and-push-docker-container.yaml@main
+    uses: Pascal0030/lorawan-gateway-sx1302/.github/workflows/build-and-push-docker-container.yaml@main
     permissions:
       contents: read
       packages: write
