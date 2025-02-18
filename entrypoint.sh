@@ -11,19 +11,16 @@ GATEWAY_ID=$(cat ./chip_id.txt)
 echo "EUI: $GATEWAY_ID"
 cd ..
 
-if [ -z $GATEWAY_ID] || [ -z $SERVER_ADDRESS ] || [ -z $SERVER_PORT_UP ] || [ -z $SERVER_PORT_DOWN ]; then
-  echo "INFO: GatewayID/ServerAddress/ServerPortUp/ServerPortDown is not set."
+if [ -n "$GATEWAY_ID" ] || [ -n "$SERVER_ADDRESS" ] || [ -n "$SERVER_PORT_UP" ] || [ -n "$SERVER_PORT_DOWN" ]; then
+  echo "INFO: GatewayID/ServerAddress/ServerPortUp/ServerPortDown is set."
   STARTMODE=1
 elif [ -e /opt/docker/lorawan-gateway/global_conf.json ]; then
   echo "INFO: global_conf.json file is found."
   STARTMODE=2
 else
-  echo "INFO: global_conf.json file is not found."
+  echo "INFO: global_conf.json file is not found and GatewayID/ServerAddress/ServerPortUp/ServerPortDown is not set."
   echo "using container in debug mode"
-  DEBUG=1
-fi
-
-if [ 1 -eq $DEBUG ]; then
+  echo \n
   echo "required variables are not set - exiting"
   sleep 10
   exit 1
@@ -38,15 +35,20 @@ sed 's|/\*.*\*/||g' ./packet_forwarder/test_conf > ./packet_forwarder/test_conf.
 # Add the Gateway Configuration to the test_conf.json file
 # .gateway_conf.gps_tty_path = "" -> is uesed to disable GPS functions because the GPS module does not work in the Docker container
 
-if [ 1 -eq $STARTMODE ]; then
-  jq --arg gatewayID $GATEWAY_ID --arg serverAddress $SERVER_ADDRESS --arg serverPortUp $SERVER_PORT_UP --arg serverPortDown $SERVER_PORT_DOWN '
+if [ 1 -eq "$STARTMODE" ]; then
+  jq --arg gatewayID "$GATEWAY_ID" \
+     --arg serverAddress "$SERVER_ADDRESS" \
+     --arg serverPortUp "$SERVER_PORT_UP" \
+     --arg serverPortDown "$SERVER_PORT_DOWN" \
+    '
     .gateway_conf.gateway_ID = $gatewayID |
     .gateway_conf.server_address = $serverAddress |
     .gateway_conf.serv_port_up = $serverPortUp |
     .gateway_conf.serv_port_down = $serverPortDown |
-    .gateway_conf.gps_tty_path = ""' ./packet_forwarder/test_conf.json > ./packet_forwarder/temp.json && \
+    .gateway_conf.gps_tty_path = ""
+    ' ./packet_forwarder/test_conf.json > ./packet_forwarder/temp.json && \
     mv ./packet_forwarder/temp.json ./packet_forwarder/test_conf.json    
-else if [ 2 -eq $STARTMODE ]; then
+elif [ 2 -eq "$STARTMODE" ]; then
   jq --slurpfile src /opt/docker/lorawan-gateway/global_conf.json '
     .gateway_conf.gateway_ID = $src[0].gateway_conf.gateway_ID |
     .gateway_conf.server_address = $src[0].gateway_conf.servers[0].server_address |
