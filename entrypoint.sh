@@ -46,6 +46,15 @@ if [ 1 -eq "$STARTMODE" ]; then
     .gateway_conf.serv_port_up = $serverPortUp |
     .gateway_conf.serv_port_down = $serverPortDown |
     .gateway_conf.gps_tty_path = ""
+    .gateway_conf.servers = [
+      {
+        "gateway_ID": $gatewayID,
+        "server_address": $serverAddress,
+        "serv_port_up": $serverPortUp,
+        "serv_port_down": $serverPortDown,
+        "serv_enabled": true
+      }
+    ]
     ' ./packet_forwarder/test_conf.json > ./packet_forwarder/temp.json && \
     mv ./packet_forwarder/temp.json ./packet_forwarder/test_conf.json    
 elif [ 2 -eq "$STARTMODE" ]; then
