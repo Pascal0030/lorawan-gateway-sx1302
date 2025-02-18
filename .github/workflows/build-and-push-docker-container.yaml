@@ -4,8 +4,6 @@ on:
     types:
       - created
   push:
-    tags:
-      - 'v*.*.*'
     paths:
       - '/**'
       - '!**.md'

@@ -5,6 +5,11 @@ FROM satmandu/raspios:lite AS baseimage
 ARG TARGETPLATFORM
 ARG BUILDPLATFORM
 
+ENV GATEWAY_ID=
+ENV SERVER_ADDRESS=
+ENV SERVER_PORT_UP=
+ENV SERVER_PORT_DOWN=
+
 #Labels
 LABEL org.opencontainers.image.source=https://github.com/pascal0030/lorawan-gateway-sx1302
 LABEL org.opencontainers.image.description="Loarawan Gateway Docker Image"
