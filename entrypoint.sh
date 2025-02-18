@@ -5,7 +5,7 @@ STARTMODE=0
 if [-z {{$GATEWAY_ID}} || -z {{$SERVER_ADDRESS}} || -z {{$SERVER_PORT_UP}} || -z {{$SERVER_PORT_DOWN}} ]; then
   echo "INFO: GatewayID/ServerAddress/ServerPortUp/ServerPortDown is not set."
   STARTMODE=1
-else if [ -e /opt/docker/lorawan-gateway/global_conf.json ]; then
+elif [ -e /opt/docker/lorawan-gateway/global_conf.json ]; then
   echo "INFO: global_conf.json file is found."
   STARTMODE=2
 else
