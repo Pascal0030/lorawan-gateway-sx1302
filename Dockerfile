@@ -1,6 +1,8 @@
 # syntax=docker/dockerfile:1
 FROM satmandu/raspios:lite AS baseimage
 
+# try to test debian:bookworm-slim socker image
+
 # Arguments during build
 ARG TARGETPLATFORM
 ARG BUILDPLATFORM
@@ -24,7 +26,7 @@ RUN apt install -y \
         git
 
 
-FROM baseimage as raspberrypi4
+FROM baseimage AS raspberrypi4
 LABEL org.opencontainers.image.target.system="raspberrypi4"
 # Raspberry Pi 4 Installation
 # Install sx1302_hal HAL
@@ -43,7 +45,7 @@ RUN chmod +x /app/sx1302_hal/entrypoint.sh
 CMD [ "/bin/bash", "-c", "./entrypoint.sh" ]
 
 
-FROM baseimage as raspberrypi5
+FROM baseimage AS raspberrypi5
 LABEL org.opencontainers.image.target.system="raspberrypi5"
 # Raspberry Pi 5 Installation
 # Install sx1302_hal_rpi5 HAL
