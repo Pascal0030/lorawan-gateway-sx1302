@@ -2,6 +2,15 @@
 DEBUG=0
 STARTMODE=0
 
+cd ./util_chip_id/
+./chip_id > ./chip_id_output.txt
+sed -n 's/.*concentrator EUI: //p' ./chip_id_output.txt > ./chip_id.txt
+
+# Print the EUI Output
+GATEWAY_ID=$(cat ./chip_id.txt)
+echo "EUI: $GATEWAY_ID"
+cd ..
+
 if [ -z $GATEWAY_ID] || [ -z $SERVER_ADDRESS ] || [ -z $SERVER_PORT_UP ] || [ -z $SERVER_PORT_DOWN ]; then
   echo "INFO: GatewayID/ServerAddress/ServerPortUp/ServerPortDown is not set."
   STARTMODE=1
@@ -13,14 +22,6 @@ else
   echo "using container in debug mode"
   DEBUG=1
 fi
-
-cd ./util_chip_id/
-./chip_id > ./chip_id_output.txt
-sed -n 's/.*concentrator EUI: //p' ./chip_id_output.txt > ./chip_id.txt
-
-# Print the EUI Output
-printf "EUI: " && cat ./chip_id.txt
-cd ..
 
 if [ 1 -eq $DEBUG ]; then
   echo "required variables are not set - exiting"
