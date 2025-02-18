@@ -2,7 +2,7 @@
 DEBUG=0
 STARTMODE=0
 
-if [ -z {{$GATEWAY_ID}} || -z {{$SERVER_ADDRESS}} || -z {{$SERVER_PORT_UP}} || -z {{$SERVER_PORT_DOWN}} ]; then
+if [ -z $GATEWAY_ID || -z $SERVER_ADDRESS || -z $SERVER_PORT_UP || -z $SERVER_PORT_DOWN ]; then
   echo "INFO: GatewayID/ServerAddress/ServerPortUp/ServerPortDown is not set."
   STARTMODE=1
 elif [ -e /opt/docker/lorawan-gateway/global_conf.json ]; then
@@ -24,7 +24,7 @@ cd ..
 
 if [ 1 -eq $DEBUG ]; then
   echo "required variables are not set - exiting"
-  sleep 5
+  sleep 10
   exit 1
 fi
 
