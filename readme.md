@@ -61,6 +61,7 @@ ENV SERVER_PORT_UP | The Server UDP UP-Port. Defaults to `1700`. | `[optional]`
 ENV SERVER_PORT_DOWN | The Server UDP-DOWN Port. Defaults to `1700`. | `[optional]`
 DEBUG | Use this Flag to determine the EUI-Number.<br> Can be `1` or `0`. Defaults to `0`. | `[optional]`
 
+
 ```bash
 docker run -d --restart always --privileged \
 -e SERVER_ADDRESS=eu1.cloud.thethings.network \
