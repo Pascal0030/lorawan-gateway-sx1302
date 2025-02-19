@@ -13,7 +13,7 @@ I got some Problems on installing the raspberrypi4 target system
 - The GPS Module also does not work inside the docker-image. Currently i have no clue what the problem could be.
 > Feel free to contribute to this project.
 
-### 1. Prepare to run the Docker-Image
+## Preparations to run the Docker-Image
  `sudo raspi-config` \
 Go to "***Interface Options***"
 - Enable SPI
@@ -30,14 +30,15 @@ docker run --privileged \
 ghcr.io/pascal0030/lorawan-gateway-sx1302:latest
 ```
 
-### 2. Register your device in The Things Network
+### 1.2 Register your device in The Things Network
 - Open [The Things Network Console](https://eu1.cloud.thethings.network/console) in a browser and create a new gateway with the EUI-Number from the previous step.
 ![Create a new Gateway](images/create-gateway.png)
 - Go to your created gateway and download the `global_conf.json` file from the website.
 - Store the downloaded file on the raspberry pi under `/opt/docker/lorawan-gateway/global_conf.json`
 
 
-### 3. Run the Lorawan Gateway
+## Run the Docker Image
+### 2. Run the Lorawan Gateway with the provided global_conf.json file - VARIANT 1
 Start the gateway with following command.
 There is no need to modify the downloaded file like the documentation [SX1302_LoRaWAN_Gateway](https://www.waveshare.com/wiki/SX1302_LoRaWAN_Gateway_HAT) describes.
 \-> The Docker Image does the required modification itself.
@@ -46,6 +47,17 @@ docker run -d --restart always --privileged \
   -v /opt/docker/lorawan-gateway/global_conf.json:/opt/docker/lorawan-gateway/global_conf.json:ro \
   ghcr.io/pascal0030/lorawan-gateway-sx1302:latest
 ```
+
+### 3. Run the Lorawan Gateway with ENV Variables - VARIANT 2
+Define following ENV Variables and start the Docker Image.
+
+| ENV Variable       | Description  |
+| ------------------ | ------------ |
+ENV SERVER_ADDRESS | `required` defaulte to `eu1.cloud.thethings.network`
+ENV SERVER_PORT_UP | `required` defaulte to `1700`
+ENV SERVER_PORT_DOWN | `required` defaulte to `1700`
+
+
 
 ## Build/Modify the Lorawan Gateway Image
 If you want to build and modify this Docker Image, follow the steps below.

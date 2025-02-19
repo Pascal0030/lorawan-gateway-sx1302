@@ -11,12 +11,12 @@ GATEWAY_ID=$(cat ./chip_id.txt)
 echo "EUI: $GATEWAY_ID"
 cd ..
 
-if [ -n "$GATEWAY_ID" ] || [ -n "$SERVER_ADDRESS" ] || [ -n "$SERVER_PORT_UP" ] || [ -n "$SERVER_PORT_DOWN" ]; then
-  echo "INFO: GatewayID/ServerAddress/ServerPortUp/ServerPortDown is set."
-  STARTMODE=1
-elif [ -e /opt/docker/lorawan-gateway/global_conf.json ]; then
+if [ -e /opt/docker/lorawan-gateway/global_conf.json ]; then
   echo "INFO: global_conf.json file is found."
   STARTMODE=2
+elif [ -n "$GATEWAY_ID" ] && [ -n "$SERVER_ADDRESS" ] && [ -n "$SERVER_PORT_UP" ] && [ -n "$SERVER_PORT_DOWN" ]; then
+  echo "INFO: GatewayID/ServerAddress/ServerPortUp/ServerPortDown is set."
+  STARTMODE=1
 else
   echo "INFO: global_conf.json file is not found and GatewayID/ServerAddress/ServerPortUp/ServerPortDown is not set."
   echo "using container in debug mode"

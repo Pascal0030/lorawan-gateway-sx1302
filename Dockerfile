@@ -8,9 +8,9 @@ ARG TARGETPLATFORM
 ARG BUILDPLATFORM
 
 ENV GATEWAY_ID=
-ENV SERVER_ADDRESS=
-ENV SERVER_PORT_UP=
-ENV SERVER_PORT_DOWN=
+ENV SERVER_ADDRESS="eu1.cloud.thethings.network"
+ENV SERVER_PORT_UP="1700"
+ENV SERVER_PORT_DOWN="1700"
 
 #Labels
 LABEL org.opencontainers.image.source=https://github.com/pascal0030/lorawan-gateway-sx1302
