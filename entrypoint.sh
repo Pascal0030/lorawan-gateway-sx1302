@@ -25,10 +25,10 @@ elif [ -e /opt/docker/lorawan-gateway/global_conf.json ]; then
   STARTMODE="2"
 elif [ -n "$GATEWAY_ID" ] && [ -n "$SERVER_ADDRESS" ] && [ -n "$SERVER_PORT_UP" ] && [ -n "$SERVER_PORT_DOWN" ]; then
   echo "INFO: GatewayID/ServerAddress/ServerPortUp/ServerPortDown is set."
-  echo "INFO: ${Green}GatewayID: ${GATEWAY_ID}"${NC}
-  echo "INFO: ${Green}ServerAddress: ${SERVER_ADDRESS}"${NC}
-  echo "INFO: ${Green}ServerPortUp: ${SERVER_PORT_UP}"${NC}
-  echo "INFO: ${Green}ServerPortDown: ${SERVER_PORT_DOWN}"${NC}
+  echo -e "INFO: "${Green}"GatewayID: "${GATEWAY_ID}${NC}
+  echo -e "INFO: "${Green}"ServerAddress: "${SERVER_ADDRESS}${NC}
+  echo -e "INFO: "${Green}"ServerPortUp: "${SERVER_PORT_UP}${NC}
+  echo -e "INFO: "${Green}"ServerPortDown: "${SERVER_PORT_DOWN}${NC}
   STARTMODE="1"
 else
   echo "ERROR: GatewayID/ServerAddress/ServerPortUp/ServerPortDown is not set."
@@ -49,7 +49,7 @@ sed 's|/\*.*\*/||g' ./packet_forwarder/test_conf > ./packet_forwarder/test_conf.
 # Add the Gateway Configuration to the test_conf.json file
 # .gateway_conf.gps_tty_path = "" -> is uesed to disable GPS functions because the GPS module does not work in the Docker container
 
-if [ "$STARTMODE" -eq "1"]; then
+if [ "$STARTMODE" -eq "1" ]; then
   jq --arg gatewayID "$GATEWAY_ID" \
      --arg serverAddress "$SERVER_ADDRESS" \
      --arg serverPortUp "$SERVER_PORT_UP" \
