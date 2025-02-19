@@ -19,12 +19,15 @@ LABEL org.opencontainers.image.description="Loarawan Gateway Docker Image"
 LABEL org.opencontainers.image.authors="Pasal0030"
 
 # Install the required packages
-RUN apt update
-RUN apt install -y \
+# wget is for image debian:bookworm-slim
+RUN apt update \
+&& apt install -y \
+        wget \
         make \
         gcc \
         jq \
-        git
+        git \
+        && rm -rf /var/lib/apt/lists/*
 
 
 FROM baseimage AS raspberrypi4
@@ -61,5 +64,8 @@ RUN cp tools/reset_lgw.sh util_chip_id/ && cp tools/reset_lgw.sh packet_forwarde
 
 COPY entrypoint.sh /app/sx1302_hal_rpi5-master/entrypoint.sh
 RUN chmod +x /app/sx1302_hal_rpi5-master/entrypoint.sh
+
+RUN apt remove -y \
+        jq
 
 CMD [ "/bin/bash", "-c", "./entrypoint.sh" ]
