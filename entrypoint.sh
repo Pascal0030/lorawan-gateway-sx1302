@@ -1,5 +1,4 @@
 #!/bin/bash
-DEBUG=0
 STARTMODE=0
 
 cd ./util_chip_id/
@@ -17,11 +16,17 @@ if [ -e /opt/docker/lorawan-gateway/global_conf.json ]; then
 elif [ -n "$GATEWAY_ID" ] && [ -n "$SERVER_ADDRESS" ] && [ -n "$SERVER_PORT_UP" ] && [ -n "$SERVER_PORT_DOWN" ]; then
   echo "INFO: GatewayID/ServerAddress/ServerPortUp/ServerPortDown is set."
   STARTMODE=1
-else
-  echo "INFO: global_conf.json file is not found and GatewayID/ServerAddress/ServerPortUp/ServerPortDown is not set."
-  echo "using container in debug mode"
+elif [ -eq 1 "$DEBUG" ]; then
+  echo "INFO: Debug mode is enabled."
   echo \n
-  echo "required variables are not set - exiting"
+  echo "exiting Container in 10 seconds"
+  sleep 10
+  exit 1
+else
+  echo "ERROR: GatewayID/ServerAddress/ServerPortUp/ServerPortDown is not set."
+  echo "ERROR: global_conf.json file is not found."
+  echo "ERROR: Debug mode is not enabled."
+  echo "ERROR: Exiting Container in 10 seconds"
   sleep 10
   exit 1
 fi
@@ -45,7 +50,7 @@ if [ 1 -eq "$STARTMODE" ]; then
     .gateway_conf.server_address = $serverAddress |
     .gateway_conf.serv_port_up = $serverPortUp |
     .gateway_conf.serv_port_down = $serverPortDown |
-    .gateway_conf.gps_tty_path = ""
+    .gateway_conf.gps_tty_path = "" |
     .gateway_conf.servers = [
       {
         "gateway_ID": $gatewayID,
