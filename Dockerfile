@@ -1,6 +1,7 @@
 # syntax=docker/dockerfile:1
-FROM satmandu/raspios:lite AS baseimage
+FROM debian:bookworm-slim AS baseimage
 
+# working image: satmandu/raspios:lite
 # try to test debian:bookworm-slim socker image
 
 # Arguments during build
