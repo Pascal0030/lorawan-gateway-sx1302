@@ -25,10 +25,10 @@ elif [ -e /opt/docker/lorawan-gateway/global_conf.json ]; then
   STARTMODE="2"
 elif [ -n "$GATEWAY_ID" ] && [ -n "$SERVER_ADDRESS" ] && [ -n "$SERVER_PORT_UP" ] && [ -n "$SERVER_PORT_DOWN" ]; then
   echo "INFO: GatewayID/ServerAddress/ServerPortUp/ServerPortDown is set."
-  echo -e "INFO: "${Green}"GatewayID: "${GATEWAY_ID}${NC}
-  echo -e "INFO: "${Green}"ServerAddress: "${SERVER_ADDRESS}${NC}
-  echo -e "INFO: "${Green}"ServerPortUp: "${SERVER_PORT_UP}${NC}
-  echo -e "INFO: "${Green}"ServerPortDown: "${SERVER_PORT_DOWN}${NC}
+  echo -e "INFO: "${GREEN}"GatewayID: "${GATEWAY_ID}${NC}
+  echo -e "INFO: "${GREEN}"ServerAddress: "${SERVER_ADDRESS}${NC}
+  echo -e "INFO: "${GREEN}"ServerPortUp: "${SERVER_PORT_UP}${NC}
+  echo -e "INFO: "${GREEN}"ServerPortDown: "${SERVER_PORT_DOWN}${NC}
   STARTMODE="1"
 else
   echo "ERROR: GatewayID/ServerAddress/ServerPortUp/ServerPortDown is not set."
