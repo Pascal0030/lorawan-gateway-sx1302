@@ -15,18 +15,18 @@ GATEWAY_ID=$(cat ./chip_id.txt)
 echo -e ${GREEN}"EUI: "${GATEWAY_ID}${NC}
 cd ..
 
-if [ -e /opt/docker/lorawan-gateway/global_conf.json ]; then
-  echo "INFO: global_conf.json file is found."
-  STARTMODE=2
-elif [ -n "$GATEWAY_ID" ] && [ -n "$SERVER_ADDRESS" ] && [ -n "$SERVER_PORT_UP" ] && [ -n "$SERVER_PORT_DOWN" ]; then
-  echo "INFO: GatewayID/ServerAddress/ServerPortUp/ServerPortDown is set."
-  STARTMODE=1
-elif [ 1 "$DEBUG" -eq 1 ]; then
+if [ "$DEBUG" -eq 1 ]; then
   echo "INFO: Debug mode is enabled. Please note the EUI-NUMBER."
   echo \n
   echo "exiting Container in 10 seconds"
   sleep 10
   exit 1
+elif [ -e /opt/docker/lorawan-gateway/global_conf.json ]; then
+  echo "INFO: global_conf.json file is found."
+  STARTMODE=2
+elif [ -n "$GATEWAY_ID" ] && [ -n "$SERVER_ADDRESS" ] && [ -n "$SERVER_PORT_UP" ] && [ -n "$SERVER_PORT_DOWN" ]; then
+  echo "INFO: GatewayID/ServerAddress/ServerPortUp/ServerPortDown is set."
+  STARTMODE=1
 else
   echo "ERROR: GatewayID/ServerAddress/ServerPortUp/ServerPortDown is not set."
   echo "ERROR: global_conf.json file is not found."
@@ -46,7 +46,7 @@ sed 's|/\*.*\*/||g' ./packet_forwarder/test_conf > ./packet_forwarder/test_conf.
 # Add the Gateway Configuration to the test_conf.json file
 # .gateway_conf.gps_tty_path = "" -> is uesed to disable GPS functions because the GPS module does not work in the Docker container
 
-if [ 1 -eq "$STARTMODE" ]; then
+if [ "$STARTMODE" -eq 1]; then
   jq --arg gatewayID "$GATEWAY_ID" \
      --arg serverAddress "$SERVER_ADDRESS" \
      --arg serverPortUp "$SERVER_PORT_UP" \
@@ -68,7 +68,7 @@ if [ 1 -eq "$STARTMODE" ]; then
     ]
     ' ./packet_forwarder/test_conf.json > ./packet_forwarder/temp.json && \
     mv ./packet_forwarder/temp.json ./packet_forwarder/test_conf.json    
-elif [ 2 -eq "$STARTMODE" ]; then
+elif [ "$STARTMODE" -eq 2 ]; then
   jq --slurpfile src /opt/docker/lorawan-gateway/global_conf.json '
     .gateway_conf.gateway_ID = $src[0].gateway_conf.gateway_ID |
     .gateway_conf.server_address = $src[0].gateway_conf.servers[0].server_address |
