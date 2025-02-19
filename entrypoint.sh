@@ -1,13 +1,18 @@
 #!/bin/bash
 STARTMODE=0
 
+# Define color codes
+RED='\033[31m'
+GREEN='\033[32m'
+NC='\033[0m' # No Color
+
 cd ./util_chip_id/
 ./chip_id > ./chip_id_output.txt
 sed -n 's/.*concentrator EUI: //p' ./chip_id_output.txt > ./chip_id.txt
 
 # Print the EUI Output
 GATEWAY_ID=$(cat ./chip_id.txt)
-echo "EUI: $GATEWAY_ID"
+echo -e ${GREEN}"EUI: "${GATEWAY_ID}${NC}
 cd ..
 
 if [ -e /opt/docker/lorawan-gateway/global_conf.json ]; then
@@ -16,8 +21,8 @@ if [ -e /opt/docker/lorawan-gateway/global_conf.json ]; then
 elif [ -n "$GATEWAY_ID" ] && [ -n "$SERVER_ADDRESS" ] && [ -n "$SERVER_PORT_UP" ] && [ -n "$SERVER_PORT_DOWN" ]; then
   echo "INFO: GatewayID/ServerAddress/ServerPortUp/ServerPortDown is set."
   STARTMODE=1
-elif [ -eq 1 "$DEBUG" ]; then
-  echo "INFO: Debug mode is enabled."
+elif [ 1 "$DEBUG" -eq 1 ]; then
+  echo "INFO: Debug mode is enabled. Please note the EUI-NUMBER."
   echo \n
   echo "exiting Container in 10 seconds"
   sleep 10
@@ -26,7 +31,8 @@ else
   echo "ERROR: GatewayID/ServerAddress/ServerPortUp/ServerPortDown is not set."
   echo "ERROR: global_conf.json file is not found."
   echo "ERROR: Debug mode is not enabled."
-  echo "ERROR: Exiting Container in 10 seconds"
+  echo -e ${RED}"ERROR: Please check if the container is running with "--privileged" flag."${NC}
+  echo "INFO: Exiting Container in 10 seconds"
   sleep 10
   exit 1
 fi

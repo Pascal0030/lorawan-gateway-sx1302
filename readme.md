@@ -25,8 +25,10 @@ Go to "***Interface Options***"
 Start the Docker Container the first time after mounting the HAT.
 The Container will crash but shows you the `EUI-Number` to register the device in [The Things Network](https://eu1.cloud.thethings.network).
 > The EUI-Number should have following format: `AA555A0000000000`
-```
+
+```bash
 docker run --privileged \
+-e DEBUG=1 \
 ghcr.io/pascal0030/lorawan-gateway-sx1302:latest
 ```
 
@@ -44,19 +46,28 @@ There is no need to modify the downloaded file like the documentation [SX1302_Lo
 \-> The Docker Image does the required modification itself.
 ```bash
 docker run -d --restart always --privileged \
-  -v /opt/docker/lorawan-gateway/global_conf.json:/opt/docker/lorawan-gateway/global_conf.json:ro \
-  ghcr.io/pascal0030/lorawan-gateway-sx1302:latest
+-v /opt/docker/lorawan-gateway/global_conf.json:/opt/docker/lorawan-gateway/global_conf.json:ro \
+ghcr.io/pascal0030/lorawan-gateway-sx1302:latest
 ```
 
 ### 3. Run the Lorawan Gateway with ENV Variables - VARIANT 2
-Define following ENV Variables and start the Docker Image.
+Define following **ENV Variables** and start the Docker Image.
+You can find the Values in the downloadad `global_conf.json` file from **[1.2](#12-register-your-device-in-the-things-network)**
 
-| ENV Variable       | Description  |
-| ------------------ | ------------ |
-ENV SERVER_ADDRESS | `required` defaulte to `eu1.cloud.thethings.network`
-ENV SERVER_PORT_UP | `required` defaulte to `1700`
-ENV SERVER_PORT_DOWN | `required` defaulte to `1700`
+| ENV Variable       | Description | Required and Optional |
+| ------------------ | ----------- | :---------------------: |
+ENV SERVER_ADDRESS | The Server address to connect to.<br> Defaults to `eu1.cloud.thethings.network`. | `[optional]`
+ENV SERVER_PORT_UP | The Server UDP UP-Port. Defaults to `1700`. | `[optional]`
+ENV SERVER_PORT_DOWN | The Server UDP-DOWN Port. Defaults to `1700`. | `[optional]`
+DEBUG | Use this Flag to determine the EUI-Number.<br> Can be `1` or `0`. Defaults to `0`. | `[optional]`
 
+```bash
+docker run -d --restart always --privileged \
+-e SERVER_ADDRESS=eu1.cloud.thethings.network \
+-e SERVER_PORT_UP=1700 \
+-e SERVER_PORT_DOWN=1700 \
+ghcr.io/pascal0030/lorawan-gateway-sx1302:latest
+```
 
 
 ## Build/Modify the Lorawan Gateway Image
@@ -75,7 +86,7 @@ Chose the targe build system: `raspberrypi4` or `raspberrypi5`\
 
 Example build command:
 ```bash
-docker buildx build --target raspberrypi5 -t lorawan-gateway . 
+docker buildx build --target raspberrypi5 -t lorawan-gateway .
 ```
 
 ### 6. Use this Command to debug/test the Docker Image
