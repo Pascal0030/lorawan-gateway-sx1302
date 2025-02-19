@@ -20,9 +20,11 @@ LABEL org.opencontainers.image.authors="Pasal0030"
 
 # Install the required packages
 # wget is for image debian:bookworm-slim
+# unzip is for image debian:bookworm-slim
 RUN apt update \
 && apt install -y \
         wget \
+        unzip \
         make \
         gcc \
         jq \
