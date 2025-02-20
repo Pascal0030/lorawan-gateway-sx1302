@@ -13,8 +13,7 @@ LABEL org.opencontainers.image.authors="Pasal0030"
 
 # Install the required packages
 RUN apk update
-# RUN apd add raspberrypi-utils-pinctrl
-# RUN apk add linux-headers
+RUN apk add linux-headers
 RUN apk add raspberrypi-utils
 RUN apk add jq
 RUN apk add git
