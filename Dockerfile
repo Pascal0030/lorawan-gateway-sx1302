@@ -23,7 +23,6 @@ RUN apk add --no-cache \
         libc-dev \
         gcompat \
         linux-headers \
-        linux-lts-headers \
         raspberrypi-dev \
         raspberrypi-libs
 
