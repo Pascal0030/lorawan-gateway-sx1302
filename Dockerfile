@@ -19,13 +19,13 @@ RUN apk add --no-cache \
         gcc \
         jq \
         git \
-        raspberrypi-utils \
         raspberrypi-utils-pinctrl \
         libc-dev \
         gcompat \
         linux-headers \
         raspberrypi-dev \
-        raspberrypi-libs
+        raspberrypi-libs \
+        libstdc++
 
 FROM satmandu/raspios:lite AS baseimage2
 
