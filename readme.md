@@ -74,6 +74,8 @@ docker run -d --restart always --privileged \
 ghcr.io/pascal0030/lorawan-gateway-sx1302:latest
 ```
 
+If you have any issues running the docker image, please check if there is not already one insance running with `docker ps`.
+Otherwiese stop those containers.
 
 ## Build/Modify the Lorawan Gateway Image
 If you want to build and modify this Docker Image, follow the steps below.
