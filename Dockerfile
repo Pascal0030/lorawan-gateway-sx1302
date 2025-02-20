@@ -21,9 +21,8 @@ RUN apk add --no-cache \
         git \
         raspberrypi-utils \
         libc-dev \
-        gcompat \
+        gcompat
 
-syntax=docker/dockerfile:1
 FROM satmandu/raspios:lite AS baseimage2
 
 # default environment variables
