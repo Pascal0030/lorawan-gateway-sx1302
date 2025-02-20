@@ -20,6 +20,7 @@ RUN apk add --no-cache \
         jq \
         git \
         raspberrypi-utils \
+        raspberrypi-utils-pinctrl \
         libc-dev \
         gcompat \
         linux-headers \
