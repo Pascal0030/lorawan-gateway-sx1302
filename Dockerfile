@@ -1,34 +1,7 @@
 # syntax=docker/dockerfile:1
-FROM alpine AS baseimage
+FROM debian:bookworm-slim AS baseimage
 
-ENV DEBUG="0"
-ENV SERVER_ADDRESS="eu1.cloud.thethings.network"
-ENV SERVER_PORT_UP="1700"
-ENV SERVER_PORT_DOWN="1700"
-
-# labels
-LABEL org.opencontainers.image.source=https://github.com/pascal0030/lorawan-gateway-sx1302
-LABEL org.opencontainers.image.description="Loarawan Gateway Docker Image"
-LABEL org.opencontainers.image.authors="Pasal0030"
-
-# Install the required packages
-RUN apk add --no-cache \
-        wget \
-        unzip \
-        make \
-        gcc \
-        jq \
-        git \
-        raspberrypi-utils-pinctrl \
-        libc-dev \
-        gcompat \
-        linux-headers \
-        raspberrypi-dev \
-        raspberrypi-libs \
-        libstdc++ \
-        bash
-
-FROM satmandu/raspios:lite AS baseimage2
+# satmandu/raspios:lite
 
 # default environment variables
 ENV DEBUG="0"
@@ -42,20 +15,20 @@ LABEL org.opencontainers.image.description="Loarawan Gateway Docker Image"
 LABEL org.opencontainers.image.authors="Pasal0030"
 
 # install the required packages
-RUN apt update \
-&& apt install -y \
-        wget \
-        unzip \
-        make \
-        gcc \
-        jq \
-        git \
-        && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    raspberrypi-kernel-headers \
+    build-essential \
+    libtool \
+    git \
+    make \
+    gcc \
+    unzip \
+    wget \
+    && rm -rf /var/lib/apt/lists/*
 
-
+# raspberry pi 5 installation
 FROM baseimage AS raspberrypi5
 LABEL org.opencontainers.image.target.system="raspberrypi5"
-# raspberry pi 5 installation
 # install sx1302_hal_rpi5 HAL
 WORKDIR /app
 RUN wget https://files.waveshare.com/wiki/SX130X/demo/PI5/sx130x_hal_rpi5.zip
