@@ -21,7 +21,8 @@ RUN apk add --no-cache \
         git \
         raspberrypi-utils \
         libc-dev \
-        gcompat
+        gcompat \
+        linux-headers
 
 FROM satmandu/raspios:lite AS baseimage2
 
