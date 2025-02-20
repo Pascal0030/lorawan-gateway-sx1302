@@ -1,12 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM debian:bookworm-slim AS baseimage
-
-# working image: satmandu/raspios:lite
-# try to test debian:bookworm-slim socker image
-
-# Arguments during build
-ARG TARGETPLATFORM
-ARG BUILDPLATFORM
+FROM alpine AS baseimage
 
 ENV DEBUG="0"
 ENV SERVER_ADDRESS="eu1.cloud.thethings.network"
@@ -19,8 +12,32 @@ LABEL org.opencontainers.image.description="Loarawan Gateway Docker Image"
 LABEL org.opencontainers.image.authors="Pasal0030"
 
 # Install the required packages
-# wget is for image debian:bookworm-slim
-# unzip is for image debian:bookworm-slim
+RUN apk update
+# RUN apd add raspberrypi-utils-pinctrl
+# RUN apk add linux-headers
+RUN apk add raspberrypi-utils
+RUN apk add jq
+RUN apk add git
+RUN apk add make
+RUN apk add gcc
+RUN apk add unzip
+RUN apk add wget
+
+
+# syntax=docker/dockerfile:1
+FROM satmandu/raspios:lite AS baseimage2
+
+ENV DEBUG="0"
+ENV SERVER_ADDRESS="eu1.cloud.thethings.network"
+ENV SERVER_PORT_UP="1700"
+ENV SERVER_PORT_DOWN="1700"
+
+#Labels
+LABEL org.opencontainers.image.source=https://github.com/pascal0030/lorawan-gateway-sx1302
+LABEL org.opencontainers.image.description="Loarawan Gateway Docker Image"
+LABEL org.opencontainers.image.authors="Pasal0030"
+
+# Install the required packages
 RUN apt update \
 && apt install -y \
         wget \
@@ -30,25 +47,6 @@ RUN apt update \
         jq \
         git \
         && rm -rf /var/lib/apt/lists/*
-
-
-FROM baseimage AS raspberrypi4
-LABEL org.opencontainers.image.target.system="raspberrypi4"
-# Raspberry Pi 4 Installation
-# Install sx1302_hal HAL
-WORKDIR /app
-RUN git clone https://github.com/Lora-net/sx1302_hal.git
-WORKDIR /app/sx1302_hal
-RUN make clean all
-RUN make all
-RUN cp tools/reset_lgw.sh util_chip_id/
-RUN cp tools/reset_lgw.sh packet_forwarder/
-WORKDIR /app/sx1302_hal/
-
-COPY entrypoint.sh /app/sx1302_hal/entrypoint.sh
-RUN chmod +x /app/sx1302_hal/entrypoint.sh
-
-CMD [ "/bin/bash", "-c", "./entrypoint.sh" ]
 
 
 FROM baseimage AS raspberrypi5
