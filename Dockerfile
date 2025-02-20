@@ -12,19 +12,18 @@ LABEL org.opencontainers.image.description="Loarawan Gateway Docker Image"
 LABEL org.opencontainers.image.authors="Pasal0030"
 
 # Install the required packages
-RUN apk update
-RUN apk add linux-headers
-RUN apk add raspberrypi-utils
-RUN apk add jq
-RUN apk add git
-RUN apk add make
-RUN apk add gcc
-RUN apk add unzip
-RUN apk add wget
-RUN apk add libc-dev
+RUN apk add --no-cache \
+        wget \
+        unzip \
+        make \
+        gcc \
+        jq \
+        git \
+        raspberrypi-utils \
+        libc-dev \
+        gcompat \
 
-
-# syntax=docker/dockerfile:1
+syntax=docker/dockerfile:1
 FROM satmandu/raspios:lite AS baseimage2
 
 # default environment variables
@@ -65,8 +64,5 @@ RUN cp tools/reset_lgw.sh util_chip_id/ && cp tools/reset_lgw.sh packet_forwarde
 
 COPY entrypoint.sh /app/sx1302_hal_rpi5-master/entrypoint.sh
 RUN chmod +x /app/sx1302_hal_rpi5-master/entrypoint.sh
-
-RUN apt remove -y \
-        jq
 
 CMD [ "/bin/bash", "-c", "./entrypoint.sh" ]

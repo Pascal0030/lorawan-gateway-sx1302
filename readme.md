@@ -91,7 +91,7 @@ docker buildx build --target raspberrypi5 -t lorawan-gateway .
 ```
 
 ### 6. Use this Command to test/debug the Docker Image
-```
+```bash
 docker run -it --rm --privileged \
 lorawan-gateway /bin/bash
 ```
