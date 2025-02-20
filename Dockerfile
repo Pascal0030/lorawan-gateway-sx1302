@@ -15,8 +15,7 @@ LABEL org.opencontainers.image.description="Loarawan Gateway Docker Image"
 LABEL org.opencontainers.image.authors="Pasal0030"
 
 # install the required packages
-RUN echo "deb http://archive.raspberrypi.org/debian bookworm main" > /etc/apt/sources.list.d/raspi.list \
-    apt-get update && apt-get install -y --no-install-recommends \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     libtool \
     git \
@@ -25,6 +24,7 @@ RUN echo "deb http://archive.raspberrypi.org/debian bookworm main" > /etc/apt/so
     unzip \
     wget \
     dkms \
+    ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
 RUN wget https://github.com/up-division/pinctrl-upboard/releases/download/v1.1.6/pinctrl-upboard_1.1.6_all.deb
