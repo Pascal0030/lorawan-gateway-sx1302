@@ -24,6 +24,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     unzip \
     wget \
     ca-certificates \
+    bash \
     && rm -rf /var/lib/apt/lists/*
 
 # raspberry pi 5 installation
