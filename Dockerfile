@@ -16,7 +16,6 @@ LABEL org.opencontainers.image.authors="Pasal0030"
 
 # install the required packages
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    raspberrypi-kernel-headers \
     build-essential \
     libtool \
     git \
