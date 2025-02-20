@@ -25,7 +25,6 @@ RUN echo "deb http://archive.raspberrypi.org/debian bookworm main" > /etc/apt/so
     unzip \
     wget \
     dkms \
-    ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
 RUN wget https://github.com/up-division/pinctrl-upboard/releases/download/v1.1.6/pinctrl-upboard_1.1.6_all.deb
