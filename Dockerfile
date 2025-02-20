@@ -25,7 +25,8 @@ RUN apk add --no-cache \
         linux-headers \
         raspberrypi-dev \
         raspberrypi-libs \
-        libstdc++
+        libstdc++ \
+        bash
 
 FROM satmandu/raspios:lite AS baseimage2
 

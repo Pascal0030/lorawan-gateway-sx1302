@@ -13,6 +13,7 @@ I got some Problems on installing the raspberrypi4 target system
 - The GPS Module also does not work inside the docker-image. Currently i have no clue what the problem could be.
 > Feel free to contribute to this project.
 
+
 ## Preparations to run the Docker-Image
  `sudo raspi-config` \
 Go to "***Interface Options***"
@@ -20,6 +21,7 @@ Go to "***Interface Options***"
 - Enable I2C
 - Enable GPIO access
 > Reboot the Device
+
 
 ### 1.1 Get the EUI-Number
 Start the Docker Container the first time after mounting the HAT.
@@ -31,6 +33,7 @@ docker run --privileged \
 -e DEBUG=1 \
 ghcr.io/pascal0030/lorawan-gateway-sx1302:latest
 ```
+
 
 ### 1.2 Register your device in The Things Network
 - Open [The Things Network Console](https://eu1.cloud.thethings.network/console) in a browser and create a new gateway with the EUI-Number from the previous step.
@@ -49,6 +52,7 @@ docker run -d --restart always --privileged \
 -v /opt/docker/lorawan-gateway/global_conf.json:/opt/docker/lorawan-gateway/global_conf.json:ro \
 ghcr.io/pascal0030/lorawan-gateway-sx1302:latest
 ```
+
 
 ### 3. Run the Lorawan Gateway with ENV Variables - VARIANT 2
 Define following **ENV Variables** and start the Docker Image.
@@ -74,6 +78,7 @@ ghcr.io/pascal0030/lorawan-gateway-sx1302:latest
 ## Build/Modify the Lorawan Gateway Image
 If you want to build and modify this Docker Image, follow the steps below.
 
+
 ### 4. Checkout the Repository
 ```bash
 cd ~/github
@@ -81,14 +86,12 @@ git clone https://github.com/pascal0030/lorawan-gateway-sx1302.git
 cd lorawan-gateway-sx1302/lorawan-gateway
 ```
 
-### 5. Build the Docker Image
-Chose the targe build system: `raspberrypi4` or `raspberrypi5`\
-***Syntax:*** `docker buildx build --target <Target-Build-System> -t lorawan-gateway .` 
 
-Example build command:
+### 5. Build the Docker Image
 ```bash
 docker buildx build --target raspberrypi5 -t lorawan-gateway .
 ```
+
 
 ### 6. Use this Command to test/debug the Docker Image
 ```bash
@@ -96,8 +99,10 @@ docker run -it --rm --privileged \
 lorawan-gateway /bin/bash
 ```
 
+
 ### Feel free to contribute
 Feel free to contribut and share the code with your friends.
+
 
 ## sources
 [SX1302 LoRaWAN Gateway HAT](https://www.waveshare.com/wiki/SX1302_LoRaWAN_Gateway_HAT#Introduction)
