@@ -1,18 +1,21 @@
-#!/bin/bash
-STARTMODE="0"
+#!/usr/bin/env bash
+set -euo pipefail
+
+export STARTMODE="0"
 
 # Define color codes
 RED='\033[31m'
 GREEN='\033[32m'
 NC='\033[0m' # No Color
 
+# Get the EUI-ID
 cd ./util_chip_id/
 ./chip_id > ./chip_id_output.txt
-sed -n 's/.*concentrator EUI: //p' ./chip_id_output.txt > ./chip_id.txt
+sed -n 's/.*concentrator EUI: 0x\([0-9a-fA-F]*\).*/\1/p' ./chip_id_output.txt > ./chip_id.txt
 
 # Print the EUI Output
-GATEWAY_ID=$(cat ./chip_id.txt)
-echo -e ${GREEN}"EUI: "${GATEWAY_ID}${NC}
+export GATEWAY_ID=$(cat ./chip_id.txt)
+echo -e "${GREEN}EUI: ${GATEWAY_ID}${NC}"
 cd ..
 
 if [ "$DEBUG" -eq 1 ]; then
@@ -52,8 +55,8 @@ sed 's|/\*.*\*/||g' ./packet_forwarder/test_conf > ./packet_forwarder/test_conf.
 if [ "$STARTMODE" -eq "1" ]; then
   jq --arg gatewayID "$GATEWAY_ID" \
      --arg serverAddress "$SERVER_ADDRESS" \
-     --arg serverPortUp "$SERVER_PORT_UP" \
-     --arg serverPortDown "$SERVER_PORT_DOWN" \
+     --argjson serverPortUp $SERVER_PORT_UP \
+     --argjson serverPortDown $SERVER_PORT_DOWN \
     '
     .gateway_conf.gateway_ID = $gatewayID |
     .gateway_conf.server_address = $serverAddress |
