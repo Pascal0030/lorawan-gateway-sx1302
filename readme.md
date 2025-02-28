@@ -102,6 +102,10 @@ lorawan-gateway /bin/bash
 ```
 
 
+# Add a Node to TTN (The Things Network)
+[Create a Application and Register Node to TTN](register_enddevice.md)
+
+
 ### Feel free to contribute
 Feel free to contribut and share the code with your friends.
 
