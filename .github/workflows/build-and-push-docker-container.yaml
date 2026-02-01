@@ -41,10 +41,13 @@ jobs:
           images: ghcr.io/${{github.repository_owner}}/${{github.event.repository.name}}
           tags: |
             type=ref,event=branch
+            type=semver,pattern={{version}},value=${{ github.event.inputs.tag }},enable={{is_default_branch}}
+            type=semver,pattern={{major}}.{{minor}},value=${{ github.event.inputs.tag }},enable={{is_default_branch}}
             type=ref,event=pr
+            type=raw,value=latest,event=branch,enable={{is_default_branch}}
             type=schedule,pattern={{date 'YYYYMMDD'}}
-            type=semver,pattern={{raw}}
             type=raw,value=latest,enable={{is_default_branch}}
+            type=raw,value=dev,enable=${{ startsWith(github.ref_name, 'develop-') }}
           labels: |
             org.opencontainers.image.title=${{github.event.repository.name}}
             org.opencontainers.image.description=This Image Containes funcionality to run a LoRaWAN Gateway
