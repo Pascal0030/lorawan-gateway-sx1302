@@ -94,7 +94,7 @@ If you are building the Container on a amd64 host, you have to install the emula
 The Emulator is then installed and the Docker build command will work.
 
 ```bash
-docker run --privileged --rm tonistiigi/binfmt --install arm64
+sudo apt-get update && sudo apt-get install -y qemu-user-static binfmt-support
 ```
 
 ### 5. Build the Docker Image
