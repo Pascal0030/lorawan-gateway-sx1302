@@ -18,7 +18,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     gcc \
     jq \
     git \
-    unzitp \
+    unzip \
     wget \
     && rm -rf /var/lib/apt/lists/*
 
