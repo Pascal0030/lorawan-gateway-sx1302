@@ -91,7 +91,7 @@ cd lorawan-gateway-sx1302/lorawan-gateway
 
 ### 5. Build the Docker Image
 ```bash
-docker buildx build --target raspberrypi5 -t lorawan-gateway .
+docker buildx build --target raspberrypi5 -t lorawan-gateway . --platform linux/arm64
 ```
 
 
