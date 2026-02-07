@@ -19,7 +19,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     jq \
     git \
     unzip \
+    libc-dev \
+    libusb-1.0-0-dev \
+    pkg-config \
     wget \
+    ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
 # Raspberry Pi 5 installation
