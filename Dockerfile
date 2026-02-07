@@ -18,6 +18,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     gcc \
     jq \
     git \
+    unzitp \
+    wget \
     && rm -rf /var/lib/apt/lists/*
 
 # Raspberry Pi 5 installation
