@@ -8,9 +8,10 @@ ENV DEBUG="0" \
     SERVER_PORT_DOWN="1700"
 
 # Labels
-LABEL org.opencontainers.image.source="https://github.com/pascal0030/lorawan-gateway-sx1302" \
-      org.opencontainers.image.description="Loarawan Gateway Docker Image" \
-      org.opencontainers.image.authors="Pasal0030"
+LABEL \
+    org.opencontainers.image.source="https://github.com/pascal0030/lorawan-gateway-sx1302" \
+    org.opencontainers.image.description="Loarawan Gateway Docker Image" \
+    org.opencontainers.image.authors="Pasal0030"
 
 # Install required packages
 RUN apt-get update && apt-get install -y --no-install-recommends \

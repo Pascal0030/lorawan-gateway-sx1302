@@ -88,6 +88,14 @@ git clone https://github.com/pascal0030/lorawan-gateway-sx1302.git
 cd lorawan-gateway-sx1302/lorawan-gateway
 ```
 
+### Install the Emulator
+If you are building the Container on a amd64 host, you have to install the emulator first
+> It is only required to run this command once.\
+The Emulator is then installed and the Docker build command will work.
+
+```bash
+sudo apt-get update && sudo apt-get install -y qemu-user-static binfmt-support
+```
 
 ### 5. Build the Docker Image
 ```bash
